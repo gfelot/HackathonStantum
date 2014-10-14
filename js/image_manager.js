@@ -1,20 +1,20 @@
-function ImageManager() {
+function ImageManager(path) {
 
-
+	if (path == undefined) {
+		var path = "img/main/";
+	}
 
 	var nbImages = config.nbElements ;
 	var usedImages = []; 
-	var path = "img/main/";
 
 	this.getRandomImage = function() {
 
-		var r = Math.round(Math.random() * nbImages) + 1;
+		var r = Math.ceil(Math.random() * nbImages) ;
 		if (usedImages.indexOf(r) != -1) {
 			return this.getRandomImage() ;
 		}
 
 		usedImages.push(r) ;
-		//document.getElementById('grid-container').innerHTML += '<img src="'+path+r+'.png"/>' ;
 		return path + r + ".png" ;
 	}
 }

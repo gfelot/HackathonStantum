@@ -9,12 +9,15 @@ function matrixGenerator(x, y, v) {
 	if (v == undefined) {
 		v = 0;
 	}
-	for (var i = 0; i < x; i++) {
+
+	//crée les lignes
+	for (var i = 0; i < y; i++) {
 		matrix[i] = [];
-		for (var j = 0; j < y; j++) {
+		//cree le colonnes
+		for (var j = 0; j < x; j++) {
 			matrix[i][j] = v;
 		}
 	}
-	
+
 	return matrix;
 }
