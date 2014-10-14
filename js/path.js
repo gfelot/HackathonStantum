@@ -33,6 +33,4 @@ function PathManager(nbHouses) {
 }
 
 
-var p = new PathManager(6);
-p.setRandomPath() ;
 
