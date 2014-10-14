@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>		
@@ -7,12 +7,53 @@
 	<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+	<head>
+		<div id="player">
+			
+		</div>
 
+<<<<<<< HEAD
 
 	<canvas id="my-canvas"></canvas>
 	<div id="grid-container"></div>
 
 	
+=======
+		<div id="info">
+			<div id="score">
+				
+			</div>
+
+			<div id="time">
+				
+			</div>
+		</div>
+	</head>
+
+	<wrapper>
+		<div id="menu">
+			<div id="back">
+				
+			</div>
+			<div id="erase">
+				
+			</div>
+			<div id="perso">
+				
+			</div>
+		</div>
+		<div id="game">
+			<div id="grid-container">
+				
+			</div>
+
+			<canvas id="my-canvas">
+				
+			</canvas>
+		</div>
+	</wrapper>
+
+>>>>>>> b2eea7ad2231b61f2bade4a1a032deaa18f9b887
 	<script type="text/javascript" src="js/utils.js"></script>
 	<script type="text/javascript" src="js/image_manager.js"></script>
 	<script type="text/javascript" src="js/grid.js"></script>
