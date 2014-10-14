@@ -16,6 +16,13 @@
 			<div id="p4"></div>
 		</div>
 
+<<<<<<< HEAD
+
+	<canvas id="my-canvas"></canvas>
+	<div id="grid-container"></div>
+
+	
+=======
 		<div id="info">
 			<div id="score">
 				
@@ -50,11 +57,12 @@
 		</div>
 	</div>
 
+>>>>>>> b2eea7ad2231b61f2bade4a1a032deaa18f9b887
 	<script type="text/javascript" src="js/utils.js"></script>
-	<script type="text/javascript" src="js/canvas_state.js"></script>
 	<script type="text/javascript" src="js/image_manager.js"></script>
 	<script type="text/javascript" src="js/grid.js"></script>
 	<script type="text/javascript" src="js/path.js"></script>
+	<script type="text/javascript" src="js/movable.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/timer.js"></script>
 </body>
