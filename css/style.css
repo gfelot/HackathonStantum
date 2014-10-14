@@ -1,0 +1,125 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-image: url("../img/background.png");
+	background-repeat: no-repeat;
+}
+
+header {
+	width: 1024px;
+	height: 131px !important;	
+}
+
+#player {
+	display: inline-block;
+	margin-left: 124px;
+	width: 220px;
+	height: 100%;
+}
+
+#p1, #p2, #p3, #p4 {
+	width: 50px;
+	height: 100%;
+	margin-right: -25px;
+	display: inline-block;
+}
+
+#p1 {
+	background: url("../img/player/player1.png") no-repeat center center;
+}
+
+#p2 {
+	background: url("../img/player/player2.png") no-repeat center center;
+}
+
+#p3 {
+	background: url("../img/player/player3.png") no-repeat center center;
+}
+
+#p4 {
+	background: url("../img/player/player4.png") no-repeat center center;
+}
+
+#info {
+	display: inline-block;
+	float: right;
+	margin-right: 20px;
+	width: 260px;
+	height: 100%;
+}
+
+#score {
+	display: inline-block;
+	width: 150px;
+	height: 100%;
+}
+
+#timer {
+	display: inline-block;
+	margin-left: 6px;
+	width: 100px;
+	height: 100%;
+}
+
+#timer > svg {
+  display: block;
+  /*margin: 50px auto;*/
+}
+
+#timer > #loader 
+{ fill: #0088cc }
+
+#timer > #border 
+{ fill: #ed731b }
+
+#wrapper {
+	width: 1024px;
+	height: 600px;
+}
+
+#menu {
+	float: left;
+	padding-top: 130px;
+	width: 124px;
+	height: 600px;
+}
+
+#back, #erase {
+	margin-left: 14px;
+	width: 97px;
+	height: 97px;
+	background-color: white;
+}
+
+#back {
+	background: white url("../img/button/back.png") no-repeat center center;
+}
+
+#erase {
+	margin-top: 20px;
+	background: white url("../img/button/erase.png") no-repeat center center;
+}
+
+#back:hover {
+	background: #ed731b url("../img/button/backHover.png") no-repeat center center;
+}
+
+#erase:hover {
+	background: #ed731b url("../img/button/eraseHover.png") no-repeat center center;
+}
+
+#perso {
+	margin-top: 80px;
+	margin-left: 2px;
+	height: 120px;
+	width: 120px;
+	background-image: url("../img/robby.png");
+}
+
+#game {
+	float: left;
+	width: 900px;
+	height: 600px;
+}
