@@ -53,10 +53,13 @@ function PathManager(nbElements) {
 	}
 }
 
+var done = [];
 PathManager.prototype.draw = function(c1, c2, nbCircles) {
 
 	var usedCells = grid.getUsedCells() ;
 	var w = config.canvas.cellWidth ;
+
+	if(done.indexOf(usedCells[c1].e.id+'_'+usedCells[c2].e.id) != -1 || done.indexOf(usedCells[c2].e.id+'_'+usedCells[c1].e.id) != -1)  return;
 
 	switch (config.linkStyle) {
 
@@ -71,14 +74,17 @@ PathManager.prototype.draw = function(c1, c2, nbCircles) {
 		
 			var nbSpaces = nbCircles - 1;
 			var totalCircles = (nbCircles - 1) * 2 * radius ;
-			var spaceWidth = Math.abs((line - totalCircles) / nbSpaces );
-
+			var spaceWidth = Math.abs(line / nbSpaces);
+			//var spaceWidth = line / (nbCircles * 2 * radius) ;
+			//spaceWidth = spaceWidth / nbSpaces ;
+			// console.log(spaceWidth) ;
+			// console.log(line) ;
 			var x = (usedCells[c1].x * w) + w / 2;
 			var y = (usedCells[c1].y * w) + w / 2;
 			var newY = 0;
 			var newX = 0;
-			var addY = Math.round(spaceWidth * Math.sin(alpha + Math.PI / 2)) ;
-			var addX = Math.round(spaceWidth * Math.cos(alpha + Math.PI / 2)) ;
+			var addY = spaceWidth * Math.sin(alpha + Math.PI / 2) ;
+			var addX = spaceWidth * Math.cos(alpha + Math.PI / 2) ;
 			
 			var color = '#'+'0123456789abcdef'.split('').map(function(v,i,a){
 				return i>5 ? null : a[Math.floor(Math.random()*16)]
@@ -101,8 +107,13 @@ PathManager.prototype.draw = function(c1, c2, nbCircles) {
  
 				newX = x + addX ;
 				newY = y + addY ;
+
 				x = newX ;
 				y = newY ;
+
+				// console.log('y----------------------') ;
+				// console.log(x, y) ;
+				// console.log(newX, newY) ;
 
 			}
 
@@ -133,7 +144,7 @@ PathManager.prototype.draw = function(c1, c2, nbCircles) {
 	}
 
 
-
+	done.push(usedCells[c1].e.id+'_'+usedCells[c2].e.id);
 
 };
 

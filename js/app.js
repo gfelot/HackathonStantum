@@ -2,7 +2,7 @@
 var config = {
 	nbPlayers : 1,
 	nbElements : 8,
-	linkStyle : "line",
+	linkStyle : "circle",
 	canvas : {
 		id : "my-canvas",
 		width : 900,
