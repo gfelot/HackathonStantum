@@ -18,7 +18,8 @@ function Movable(index) {
 		div.setAttribute('class', 'player');
 		div.setAttribute('draggable', true);
 		var mini = document.createElement('div') ;
-		var bg = new ImageManager('movable/movable_') ;
+		usedImages = [] ;
+		var bg = new ImageManager('movable/movable_', 6) ;
 		bg = bg.getRandomImage() ;
 		mini.style.backgroundImage = "url("+bg+")" ;
 		mini.setAttribute('class', 'mini') ;
@@ -31,8 +32,7 @@ function Movable(index) {
 		document.getElementById('grid-container').appendChild(div);
 
 		div.addEventListener('dragstart', function(e) {
-			
-			console.log('ok');
+
 		});
 	}
 
@@ -53,10 +53,21 @@ function Movable(index) {
 			this.historyState.push(this.currentCell) ;
 			this.updateScore(this.currentCell, i, 'add');
 
+			ctrlZ.setAttribute('class', '') ;
+
 			//on bouge
 			this.currentCell = i ;
 			this.div.style.left = usedCells[i].x * config.canvas.cellWidth + "px";
 			this.div.style.top = usedCells[i].y * config.canvas.cellWidth + "px";
+
+			if (i == 7) {
+				victoryScreen.style.display = "block" ;
+
+				var msg = "Tu as atteint la planète en "+this.score+" km !"
+		
+				victoryScreen.childNodes[1].innerHTML = msg ;
+
+			}
 
 		}
 
@@ -72,10 +83,15 @@ function Movable(index) {
 			this.div.style.left = usedCells[oldCell].x * config.canvas.cellWidth + "px";
 			this.div.style.top = usedCells[oldCell].y * config.canvas.cellWidth + "px";
 			
+			if (this.historyState.length == 0) {
+				ctrlZ.setAttribute('class', 'forbidden') ;
+			}
 		} else {
 			alert('Tu ne peux plus reculer !');
 			this.score = 0 ;
 			compteur.textContent = this.score ;
+
+			ctrlZ.setAttribute('class', 'forbidden') ;
 		}
 
 	}
@@ -86,9 +102,9 @@ function Movable(index) {
 		var distance = myPathManager.paths[o][n] ;
 		
 		if (mode == "remove") {
-			this.score -= distance ;
+			this.score -= Math.abs(distance) ;
 		} else {
-			this.score += distance ;
+			this.score += Math.abs(distance) ;
 		}
 
 		compteur.textContent = this.score ;

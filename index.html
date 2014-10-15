@@ -11,34 +11,31 @@
 	<div id="screen-wrapper">
 	
 		<div id="header">
+			<ul id="menu">
+				<li>
+					<a href="#" id="back" class="forbidden" title="retour"></a>
+				</li>
+			</ul>
 
-			<div id="player">
-				<div class="player-color" id="player-1"></div>
-			</div>
-
-			<div id="infos">
-				<div id="score">
+			<ul id="infos">
+				<li id="player">
+					<div class="player-color" id="player-1"></div>
+				</li>
+				<li id="score">
 					<span id="compteur">0</span> km
-				</div>
+				</li>
 
-				<div id="time">
+				<li id="time">
 					
-				</div>
-			</div>
+				</li>
+			</ul>
 		</div>
 
 		<div id="content">
-			<div class="aside">
-				<ul id="menu">
-					<li>
-						<a href="#" id="back" title="retour"></a>
-					</li>
-					<li>
-						<a href="#" id="erase" title="annuler"></a>
-					</li>
-				</ul>
+<!-- 			<div class="aside">
+				
 				<div id="perso"></div>
-			</div>
+			</div> -->
 
 			<div id="game-container">
 				<canvas id="my-canvas">	</canvas>
@@ -46,6 +43,8 @@
 			</div>
 		</div>
 		</div>
+
+		<div id="victory"><h1>Félicitations !</h1><p></p></div>
 		<script type="text/javascript" src="js/utils.js"></script>
 		<script type="text/javascript" src="js/image_manager.js"></script>
 		<script type="text/javascript" src="js/grid.js"></script>

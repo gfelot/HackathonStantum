@@ -12,31 +12,81 @@ function Grid(context, nbElem) {
 	this.gridWidth = Math.round(parseInt(config.canvas.width) / parseInt(config.canvas.cellWidth)) ;
 	this.gridHeight = Math.round(parseInt(config.canvas.height) / parseInt(config.canvas.cellHeight)) ;
 
-	this.grid = matrixGenerator(this.gridWidth, this.gridHeight, 0);
-	this.maxDistance = 1 ; //distance entre chaque maison
+	
+		this.grid = matrixGenerator(this.gridWidth, this.gridHeight, 0);
+		this.maxDistance = 1 ; //distance entre chaque maison
+		this.usedCells = [];
+	
+	this.cellPositions = [
+		[0, 1],
+		[3, 0],
+		[5, 2],
+		[1, 3],
+		[6, 4],
+		[3, 5],
+		[8, 6],
+		[9, 1],
+	] ;
 
-	this.usedCells = [];
+	usedImages = [] ;
+	var imgManager = new ImageManager('grid_items/grid_item_') ;
+	
 
 	this.setElementsOnGrid = function() {
 
 		for (var i = 0 ; i < this.nbElem; i++) {
-			this.setElementOnGrid();
+			this.setElementOnGrid(i);
 		}
 
 		return this ;
 	}
 
-	this.setElementOnGrid = function() {
+	this.setElementOnGrid = function(index) {
 
-		var cellPos = this.defineRandomPosition();
+		if (config.useRandom) {
+			var cellPos = this.defineRandomPosition();
+		} else {
+			var cellPos = this.cellPositions[index] ;
+		}
 		
-		 while (!this.isEmptyZone(cellPos[0], cellPos[1])) {
+		while (!this.isEmptyZone(cellPos[0], cellPos[1])) {
 		 	cellPos = this.setElementOnGrid();
 		 	return ;
-		 }
+		}
 	
 		this.grid[cellPos[1]][cellPos[0]] = 1;
-		
+
+		var gridContainer = document.getElementById('grid-container');
+
+		gridContainer.style.width = config.canvas.width + "px" ;
+		gridContainer.style.height = config.canvas.height + "px" ;
+		var gridItem = document.createElement('div') ;
+
+		if (this.grid[cellPos[1]][cellPos[0]] == 1) {
+
+			//on place les div pour leur associer les écouteurs
+			gridItem.setAttribute('class', 'grid-item active');
+			this.usedCells.push({
+				e : gridItem,
+				x : cellPos[0],
+				y : cellPos[1],
+			});
+
+			gridItem.setAttribute('id', 'active-grid-item-'+ (this.usedCells.length - 1));
+			gridItem.style.position = "absolute";
+			gridItem.style.top = cellPos[1] * config.canvas.cellWidth + "px";
+			gridItem.style.left = cellPos[0] * config.canvas.cellWidth + "px";
+			var imgPath = imgManager.getRandomImage() ;
+			var myImage = new Image();
+			myImage.src = imgPath;
+
+			gridItem.appendChild(myImage);
+
+		} else {
+			gridItem.setAttribute('class', 'grid-item');
+		}
+
+		gridContainer.appendChild(gridItem) ;
 		return true;
 	}
 
@@ -73,7 +123,7 @@ function Grid(context, nbElem) {
 
 
 	this.drawGrid = function() {
-
+		usedImages = [] ;
 		var imgManager = new ImageManager('grid_items/grid_item_') ;
 		var gridContainer = document.getElementById('grid-container');
 

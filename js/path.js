@@ -13,7 +13,42 @@ function PathManager(nbElements) {
 	this.paths = matrixGenerator(this.nbElements, this.nbElements, -1);
 	
 	this.setRandomPath = function() {
+		
+		if (!config.useRandom) {
+			this.paths = [
+				[0,1,0,1,0,0,0,0],
+				[1,0,1,1,0,0,0,0],
+				[0,1,0,1,1,0,0,1],
+				[1,1,1,0,1,1,0,0],
+				[0,0,1,1,0,1,1,1],
+				[0,0,0,1,1,0,1,0],
+				[0,0,0,0,1,1,0,1],
+				[0,0,1,0,1,0,1,0]
+			];
 
+			for (var i = 0; i < this.nbElements ; i++) {
+				for (var j = 0; j < this.nbElements ; j++) {
+		
+
+						//on regarde si on doit associer
+						var is_assoc = this.paths[i][j] ;
+
+						var nbCircles = is_assoc ? config.path.minLength + Math.round(config.path.maxLength * Math.random()) : 0;
+						this.paths[i][j] = nbCircles ;
+
+						if (nbCircles) {
+
+							if (linkedCells[i] == undefined) {
+								linkedCells[i] = [j];
+							} else {
+								linkedCells[i].push(j) ;
+							}
+							this.draw(i,j, nbCircles) ;
+						}
+				
+				}
+			}
+		} else {
 		for (var i = 0; i < this.nbElements ; i++) {
 			for (var j = 0; j < this.nbElements ; j++) {
 				//une maison ne peut pas etre liée a elle meme
@@ -25,7 +60,9 @@ function PathManager(nbElements) {
 					if (prev === -1) {
 
 						//on regarde si on doit associer
-						var nbCircles = Math.round(Math.random()) == 1 ? config.path.minLength + Math.round(config.path.maxLength * Math.random()) : 0;
+						//var is_assoc = Math.round(Math.random()) == 1 ;
+
+						var nbCircles = is_assoc ? config.path.minLength + Math.round(config.path.maxLength * Math.random()) : 0;
 						this.paths[i][j] = nbCircles ;
 
 						if (nbCircles) {
@@ -50,10 +87,14 @@ function PathManager(nbElements) {
 				}
 			}
 		}
+			
+		}	
+
 	}
 }
 
 var done = [];
+var countLink = 0 ;
 PathManager.prototype.draw = function(c1, c2, nbCircles) {
 
 	var usedCells = grid.getUsedCells() ;
@@ -64,67 +105,75 @@ PathManager.prototype.draw = function(c1, c2, nbCircles) {
 	switch (config.linkStyle) {
 
 		case "circle":
+
 			nbCircles = nbCircles + 2 ;
 
-			var radius = 10 ;
+			var radius = 7 ;
 			var line = this.getDistance(usedCells[c1], usedCells[c2]) ;
 			line = this.convertCellInPixel(line) ;
 
-			var alpha = Math.asin((usedCells[c1].x - usedCells[c2].x) * w/line);
-		
+			//var alpha = Math.asin((usedCells[c1].x - usedCells[c2].x) * w/line);
+
+			var alpha = Math.atan((usedCells[c1].y - usedCells[c2].y) / (usedCells[c1].x - usedCells[c2].x)) ;
+			
 			var nbSpaces = nbCircles - 1;
 			var totalCircles = (nbCircles - 1) * 2 * radius ;
 			var spaceWidth = Math.abs(line / nbSpaces);
-			//var spaceWidth = line / (nbCircles * 2 * radius) ;
-			//spaceWidth = spaceWidth / nbSpaces ;
-			// console.log(spaceWidth) ;
-			// console.log(line) ;
+	
 			var x = (usedCells[c1].x * w) + w / 2;
 			var y = (usedCells[c1].y * w) + w / 2;
 			var newY = 0;
 			var newX = 0;
-			var addY = spaceWidth * Math.sin(alpha + Math.PI / 2) ;
-			var addX = spaceWidth * Math.cos(alpha + Math.PI / 2) ;
-			
+			var addY ; 
+			var addX ;
+			if (alpha < Math.PI / 2) {
+				addY = spaceWidth * Math.sin(alpha) ;
+				addX = spaceWidth * Math.cos(alpha) ;
+			} else {
+				addY = spaceWidth * Math.sin(alpha - Math.PI ) ;
+				addX = spaceWidth * Math.cos(alpha - Math.PI) ;
+			}
+
 			var color = '#'+'0123456789abcdef'.split('').map(function(v,i,a){
-				return i>5 ? null : a[Math.floor(Math.random()*16)]
-			}).join('');
+					return i>5 ? null : a[Math.floor(Math.random()*16)]
+				}).join('');
+
+
+			var dx = (usedCells[c2].x - usedCells[c1].x) * w ;
+			var dy = (usedCells[c2].y - usedCells[c1].y) * w ;
 
 			for (var i = 0 ; i < nbCircles ; i++) {
 
 				ctx.beginPath();
 				ctx.arc(
-					x,
-					y,
+					x + i * dx / nbCircles,
+					y + i * dy / nbCircles,
 					radius,
 					0,
 					Math.PI*2,
 					true
 				);
 				ctx.closePath() ;
+				
+				ctx.fillStyle = "rgba(255,255,255,0.3)" ;
 				ctx.fillStyle = color ;
 				ctx.fill() ;
  
-				newX = x + addX ;
-				newY = y + addY ;
+				// newX = x + addX ;
+				// newY = y + addY ;
 
-				x = newX ;
-				y = newY ;
-
-				// console.log('y----------------------') ;
-				// console.log(x, y) ;
-				// console.log(newX, newY) ;
-
+				// x = newX ;
+				// y = newY ;
 			}
 
 
-			break ;
+		// 	break ;
 
-		default :
+		// default :
 
-			var color = '#'+'0123456789abcdef'.split('').map(function(v,i,a){
-				return i>5 ? null : a[Math.floor(Math.random()*16)]
-			}).join('');
+		// 	var color = '#'+'0123456789abcdef'.split('').map(function(v,i,a){
+		// 		return i>5 ? null : a[Math.floor(Math.random()*16)]
+		// 	}).join('');
 	
 			ctx.beginPath() ;
 			ctx.moveTo(w/2 + usedCells[c1].x * w, w/2 + usedCells[c1].y * w) ;
@@ -133,14 +182,16 @@ PathManager.prototype.draw = function(c1, c2, nbCircles) {
 			ctx.strokeStyle = color ;
 			ctx.lineWidth = 1;
 			ctx.stroke() ;
-			ctx.font = "24pt Arial";
-			ctx.fillStyle = color ;
-			ctx.fillText(
-				nbCircles, 
-				(usedCells[c1].x + usedCells[c2].x) / 2 * w + w/2.5, 
-				(usedCells[c1].y + usedCells[c2].y) / 2 * w + w/2.5
-			);
 
+			if (config.path.drawNumber) {
+				ctx.font = "18pt Arial";
+				ctx.fillStyle = color ;
+				ctx.fillText(
+					nbCircles - 2, 
+					(usedCells[c1].x + usedCells[c2].x) / 2 * w + w/2.5, 
+					(usedCells[c1].y + usedCells[c2].y) / 2 * w + w/2.5
+				);
+			}
 	}
 
 

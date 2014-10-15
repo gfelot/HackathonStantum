@@ -1,9 +1,10 @@
 //@import url(http://fonts.googleapis.com/css?family=Fredoka+One);
-//@import url(http://fonts.googleapis.com/css?family=Patrick+Hand);
+@import url(http://fonts.googleapis.com/css?family=Patrick+Hand);
 
 body {
 	background-image: url("../img/themes/#{$selectedTheme}/background.png");
 	background-repeat: no-repeat;
+	font-family: "Patrick Hand";
 }
 #screen-wrapper {
 	width: 1024px ;
@@ -16,7 +17,7 @@ body {
 	position: relative ;
 }
 #header {
-	height: 130px ;
+	height: 73px ;
 }
 
 #infos {
@@ -25,19 +26,18 @@ body {
 
 #score {
 	color : $main-color ;
-	font-size: 24px ;
+	font-size: 36px ;
 }
 
 #game-container {
+
+	margin : 0 auto;
 	width: 900px ;
-	height: 600px ;
+	height: 640px ;
+	padding-top: 10px ;
 }
 
-.aside {
-	width: 124px ;
-}
-
-#player, #score, #time, .player-color, .aside, #game-container {
+#player, #score, #time, .player-color {
 	float: left ;
 }
 
@@ -50,26 +50,42 @@ body {
 	@extend .clear;
 	position: absolute ;
 	z-index: 3 ;
-	top: 0 ;
+	top: 10px ;
 	left: 0 ;
 }
 
 #my-canvas {
 	position: absolute ;
-	top: 0;
+	top: 10px;
 	left: 0;
 }
 
 .grid-item {
 
 	position: relative;
+	z-index : 2 ;
 	float: left ;
 	@extend %cell-item ;
 	text-align: center ;
+
 	img {
 		display: block ;
 		width: 100%;
 		transition : all 0.3s ease ;
+	}
+
+	&.target:before {
+		z-index : 1 ;
+		content:  "";
+		display: block ;
+		width: 120px ;
+		height: 120px ;
+		position: absolute ;
+		top: -15px ;
+		left: -15px ;
+		background-color: #FFF;
+		opacity: 0.3 ;
+		border-radius : 50% ;
 	}
 }
 
@@ -93,31 +109,52 @@ body {
 	background-position: 50% 50% ;
 	background-repeat: no-repeat ;
 }
-#menu a {
-	display: block ;
-	width: 100px ;
-	height: 100px;
-	background-repeat: no-repeat ;
-	background-position: 50% 50% ;
-	transition : all 0.3s ease ;
+#menu {
+	float: left; 
+	a {
+		display: block ;
+		width: 60px ;
+		height: 60px;
+		background-repeat: no-repeat ;
+		background-position: 50% 50% ;
+		background-size: 60% ;
+		transition : all 0.3s ease ;
+		margin: 13px 20px 0 20px;
+	}
 }
 
 #back {
-	background-color : $main-color ;
-	background-image: url("../img/interface/back_hover.png");
-	&:hover {
-		background-color: #fff ;
-		background-image: url("../img/interface/back.png");
-	}
-}
-
-#erase {
-	margin-top: 20px;
-	background-image : url("../img/interface/erase_hover.png");
+	background-image : url("../img/themes/#{$selectedTheme}/interface/back_hover.png");
 	background-color:  $main-color ;
-	&:hover {
-		background-image: url("../img/interface/erase.png");
+	&:not(.forbidden):hover {
+		background-image: url("../img/themes/#{$selectedTheme}/interface/back.png");
 		background-color: #fff ;
+	}
+
+	&.forbidden {
+		cursor : no-drop ;
+		background-color: #555 ;
 	}
 }
 
+
+#victory {
+	position: fixed ;
+	z-index: 10 ;
+	background-color: rgba(0,0,0,0.8) ;
+	background-image: url("../img/themes/#{$selectedTheme}/victoire.png") ;
+	background-position: 50% 50% ;
+	display: none ;
+	width: 100% ;
+	height: 100% ;
+	top: 0 ;
+	left: 0 ;
+	color : #fff ;
+	background-repeat: no-repeat ;
+	text-align: center ;
+	font-size: 36px ;
+	padding: 20% ;
+	h1 {
+		font-size: 60px ;
+	}
+}
