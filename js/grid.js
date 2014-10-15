@@ -9,14 +9,13 @@ function Grid(context, nbElem) {
 
 	this.context = context ;
 	this.nbElem = nbElem;
-	this.gridWidth = parseInt(config.canvas.width) / parseInt(config.canvas.cellWidth) ;
-	this.gridHeight = parseInt(config.canvas.height) / parseInt(config.canvas.cellHeight) ;
+	this.gridWidth = Math.round(parseInt(config.canvas.width) / parseInt(config.canvas.cellWidth)) ;
+	this.gridHeight = Math.round(parseInt(config.canvas.height) / parseInt(config.canvas.cellHeight)) ;
 
-	this.grid = matrixGenerator(this.gridWidth, this.gridHeight);
+	this.grid = matrixGenerator(this.gridWidth, this.gridHeight, 0);
 	this.maxDistance = 1 ; //distance entre chaque maison
 
 	this.usedCells = [];
-
 
 	this.setElementsOnGrid = function() {
 
@@ -30,33 +29,34 @@ function Grid(context, nbElem) {
 	this.setElementOnGrid = function() {
 
 		var cellPos = this.defineRandomPosition();
+		
+		 while (!this.isEmptyZone(cellPos[0], cellPos[1])) {
+		 	cellPos = this.setElementOnGrid();
+		 	return ;
+		 }
 	
-		while (!this.isEmptyZone(cellPos[0], cellPos[1])) {
-			cellPos = this.setElementOnGrid();
-			return false;
-		}
-
-		this.grid[cellPos[0]][cellPos[1]] = 1;
+		this.grid[cellPos[1]][cellPos[0]] = 1;
+		
 		return true;
 	}
 
 	this.isEmptyCell = function(x,y) {
-	
-		return !this.grid[x][y] ;
+
+		return this.grid[y][x] === 1 ;
 	}
 
 	this.isEmptyZone = function(x,y) {
 
 
 
-		var xMin = x - this.maxDistance > 0 ? x - this.maxDistance : 0;
-		var xMax = x + this.maxDistance < (this.gridWidth - 1) ? x + this.maxDistance : (this.gridWidth - 1) ;
-		var yMin = y - this.maxDistance > 0 ? y - this.maxDistance : 0;
-		var yMax = y + this.maxDistance < (this.gridHeight - 1) ? y + this.maxDistance : (this.gridHeight - 1) ;
+		var xMin = (x - this.maxDistance) > 0 ? x - this.maxDistance : 0;
+		var xMax = (x + this.maxDistance) < (this.gridWidth - 1) ? x + this.maxDistance : (this.gridWidth - 1) ;
+		var yMin = (y - this.maxDistance) > 0 ? y - this.maxDistance : 0;
+		var yMax = (y + this.maxDistance) < (this.gridHeight - 1) ? y + this.maxDistance : (this.gridHeight - 1) ;
 	
 		for (var i = xMin; i <= xMax; i++) {
 			for (var j = yMin; j <= yMax; j++) {
-				if (!this.isEmptyCell(i,j)) return false;
+				if (this.isEmptyCell(i,j)) return false;
 			}	
 		}
 
@@ -64,9 +64,9 @@ function Grid(context, nbElem) {
 	}
 
 	this.defineRandomPosition = function() {
-		//dsl pr ca, je me suis gouré dans la matrice xD
-		var y = Math.floor(Math.random() * (this.gridWidth -1)); //entre O et 14
-		var x = Math.floor(Math.random() * (this.gridHeight -1)); //entre 0 et 9
+		
+		var x = Math.floor(Math.random() * (this.gridWidth -1)); //entre O et 14
+		var y = Math.floor(Math.random() * (this.gridHeight -1)); //entre 0 et 9
 		
 		return [x,y] ;
 	}
@@ -74,7 +74,7 @@ function Grid(context, nbElem) {
 
 	this.drawGrid = function() {
 
-		var imgManager = new ImageManager() ;
+		var imgManager = new ImageManager('grid_items/grid_item_') ;
 		var gridContainer = document.getElementById('grid-container');
 
 		gridContainer.style.width = config.canvas.width + "px" ;
@@ -84,10 +84,8 @@ function Grid(context, nbElem) {
 			for (var j = 0, k = this.grid[i].length ; j < k ; j++) {
 
 				var gridItem = document.createElement('div') ;
-				//var text = document.createTextNode(i+'/'+j);
-				//gridItem.appendChild(text);
 
-				if (this.grid[i][j] === 1) {
+				if (this.grid[i][j] == 1) {
 
 					//on place les div pour leur associer les écouteurs
 					gridItem.setAttribute('class', 'grid-item active');
@@ -96,15 +94,15 @@ function Grid(context, nbElem) {
 						x : j,
 						y : i,
 					});
+
 					gridItem.setAttribute('id', 'active-grid-item-'+ (this.usedCells.length - 1));
-					var text = document.createTextNode((this.usedCells.length - 1).toString());
-					gridItem.appendChild(text);
 
 					var imgPath = imgManager.getRandomImage() ;
 					var myImage = new Image();
 					myImage.src = imgPath;
 
 					gridItem.appendChild(myImage);
+
 					//on dessine l'image dans le canvas
 					// var t = function(i, j){
 
@@ -143,6 +141,33 @@ function Grid(context, nbElem) {
 
 				playerActive.moveToCell(this) ;
 
+			}, true) ;
+
+			div.addEventListener('dragleave', function(e) {
+				e.preventDefault() ;
+				var img = this.firstChild ;
+				img.style.width = "90px" ;
+				img.style.marginLeft = "0px" ;
+			}, false) ;
+
+			div.addEventListener('dragenter', function(e) {
+				e.preventDefault() ;
+				var img = this.firstChild ;
+				img.style.width = "70px" ;
+				img.style.marginLeft = "10px" ;
+			}, false) ;
+
+			div.addEventListener('dragover', function(e) {
+				e.preventDefault() ;
+			}, false) ;
+
+			div.addEventListener('drop', function(e) {
+				e.preventDefault();
+				e.stopPropagation() ;
+				var img = this.firstChild ;
+				img.style.width = "90px" ;
+				img.style.marginLeft = "0px" ;
+				playerActive.moveToCell(this) ;
 			}, false) ;
 		}
 	}

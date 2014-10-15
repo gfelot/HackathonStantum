@@ -1,16 +1,3 @@
-.clear:before, #grid-container:before,
-.clear:after,
-#grid-container:after {
-  content: " ";
-  display: table; }
-
-.clear:after, #grid-container:after {
-  clear: both; }
-
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -29,7 +16,11 @@ time, mark, audio, video {
   border: 0;
   font-size: 100%;
   font: inherit;
-  vertical-align: baseline; }
+  vertical-align: baseline;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box; }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -54,8 +45,60 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+.clear:before, #header:before, #player:before, #content:before, #infos:before, #grid-container:before,
+.clear:after,
+#header:after,
+#player:after,
+#content:after,
+#infos:after,
+#grid-container:after {
+  content: " ";
+  display: table; }
+
+.clear:after, #header:after, #player:after, #content:after, #infos:after, #grid-container:after {
+  clear: both; }
+
+.grid-item, .player {
+  width: 90px;
+  height: 90px; }
+
+body {
+  background-image: url("../img/themes/space/background.png");
+  background-repeat: no-repeat; }
+
+#screen-wrapper {
+  width: 1024px;
+  height: 768px; }
+
+#game-container, .aside {
+  position: relative; }
+
+#header {
+  height: 130px; }
+
+#infos {
+  padding: 20px; }
+
+#score {
+  color: #ed731b;
+  font-size: 24px; }
+
+#game-container {
+  width: 900px;
+  height: 600px; }
+
+.aside {
+  width: 124px; }
+
+#player, #score, #time, .player-color, .aside, #game-container {
+  float: left; }
+
+#infos {
+  float: right; }
+
 #grid-container {
   position: absolute;
+  z-index: 3;
   top: 0;
   left: 0; }
 
@@ -65,24 +108,50 @@ table {
   left: 0; }
 
 .grid-item {
-  box-sizing: border-box;
-  float: left;
-  width: 90px;
-  height: 90px;
   position: relative;
-  border: solid 1px #000; }
+  float: left;
+  text-align: center; }
   .grid-item img {
+    display: block;
     width: 100%;
-    position: absolute;
-    top: 0; }
-  .grid-item.occuped {
-    background-color: blue; }
+    transition: all 0.3s ease; }
 
 .player {
   position: absolute;
-  z-index: 5;
-  width: 90px;
-  height: 90px;
-  background-color: #f00; }
+  z-index: 5; }
+
+.mini {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  margin-left: -35px;
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat; }
+
+#menu a {
+  display: block;
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transition: all 0.3s ease; }
+
+#back {
+  background-color: #ed731b;
+  background-image: url("../img/interface/back_hover.png"); }
+  #back:hover {
+    background-color: #fff;
+    background-image: url("../img/interface/back.png"); }
+
+#erase {
+  margin-top: 20px;
+  background-image: url("../img/interface/erase_hover.png");
+  background-color: #ed731b; }
+  #erase:hover {
+    background-image: url("../img/interface/erase.png");
+    background-color: #fff; }
 
 /*# sourceMappingURL=app.css.map */

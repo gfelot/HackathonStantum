@@ -1,8 +1,7 @@
 function ImageManager(path) {
-
-	if (path == undefined) {
-		var path = "img/main/";
-	}
+	var p = path || '' ;
+	
+	this.path = "img/themes/"+config.theme+'/'+p ;
 
 	var nbImages = config.nbElements ;
 	var usedImages = []; 
@@ -15,6 +14,8 @@ function ImageManager(path) {
 		}
 
 		usedImages.push(r) ;
-		return path + r + ".png" ;
+
+		var img = this.path+r ;
+		return img+".png" ;
 	}
 }

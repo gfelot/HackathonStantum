@@ -1,7 +1,7 @@
-//config est GLOBALE !!!
+
 var config = {
 	nbPlayers : 1,
-	nbElements : 6,
+	nbElements : 8,
 	linkStyle : "line",
 	canvas : {
 		id : "my-canvas",
@@ -11,9 +11,10 @@ var config = {
 		cellHeight : 90,
 	},
 	path : {
-		minLength : 2,
-		maxLength : 8,
-	}
+		minLength : 4,
+		maxLength : 10,
+	},
+	theme : 'space'
 } ;
 
 var playerActive, 
@@ -28,8 +29,8 @@ var ctx = c.getContext("2d");
 var grid = new Grid(ctx, config.nbElements) ;
 grid.setElementsOnGrid().drawGrid() ;
 
-var p = new PathManager(config.nbElements);
-p.setRandomPath() ;
+var myPathManager = new PathManager(config.nbElements);
+myPathManager.setRandomPath() ;
 
 //initialisation des joueurs :
 var players = [] ;
@@ -42,3 +43,11 @@ for (var i = 0; i < config.nbPlayers ; i ++) {
 
 var playerActive = players[0] ;
 grid.initListeners() ;
+
+
+//init interface : 
+var ctrlZ = document.getElementById('erase') ;
+
+ctrlZ.addEventListener('click', function(){
+	playerActive.moveBackToCell() ;
+}) ;

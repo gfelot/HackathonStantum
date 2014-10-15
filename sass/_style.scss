@@ -1,0 +1,123 @@
+//@import url(http://fonts.googleapis.com/css?family=Fredoka+One);
+//@import url(http://fonts.googleapis.com/css?family=Patrick+Hand);
+
+body {
+	background-image: url("../img/themes/#{$selectedTheme}/background.png");
+	background-repeat: no-repeat;
+}
+#screen-wrapper {
+	width: 1024px ;
+	height: 768px ;
+}
+#header, #player, #content {
+	@extend .clear;
+}
+#game-container, .aside {
+	position: relative ;
+}
+#header {
+	height: 130px ;
+}
+
+#infos {
+	padding : 20px ;
+}
+
+#score {
+	color : $main-color ;
+	font-size: 24px ;
+}
+
+#game-container {
+	width: 900px ;
+	height: 600px ;
+}
+
+.aside {
+	width: 124px ;
+}
+
+#player, #score, #time, .player-color, .aside, #game-container {
+	float: left ;
+}
+
+#infos {
+	@extend .clear;
+	float: right ;
+}
+
+#grid-container {
+	@extend .clear;
+	position: absolute ;
+	z-index: 3 ;
+	top: 0 ;
+	left: 0 ;
+}
+
+#my-canvas {
+	position: absolute ;
+	top: 0;
+	left: 0;
+}
+
+.grid-item {
+
+	position: relative;
+	float: left ;
+	@extend %cell-item ;
+	text-align: center ;
+	img {
+		display: block ;
+		width: 100%;
+		transition : all 0.3s ease ;
+	}
+}
+
+
+
+.player {
+	position: absolute ;
+	z-index: 5 ;
+	
+	@extend %cell-item ;
+}
+.mini {
+	position: absolute ;
+	top: -30px ;
+	left: 50% ;
+	width: 70px ;
+	height: 70px ;
+	margin-left: -35px ;
+
+	background-size  : contain ;
+	background-position: 50% 50% ;
+	background-repeat: no-repeat ;
+}
+#menu a {
+	display: block ;
+	width: 100px ;
+	height: 100px;
+	background-repeat: no-repeat ;
+	background-position: 50% 50% ;
+	transition : all 0.3s ease ;
+}
+
+#back {
+	background-color : $main-color ;
+	background-image: url("../img/interface/back_hover.png");
+	&:hover {
+		background-color: #fff ;
+		background-image: url("../img/interface/back.png");
+	}
+}
+
+#erase {
+	margin-top: 20px;
+	background-image : url("../img/interface/erase_hover.png");
+	background-color:  $main-color ;
+	&:hover {
+		background-image: url("../img/interface/erase.png");
+		background-color: #fff ;
+	}
+}
+

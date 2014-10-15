@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>		
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>		
 
-	<link rel="stylesheet" href="css/app.css">
-	<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-	<header>
-		<div id="player">
-			<div id="p1"></div>
-			<div id="p2"></div>
-			<div id="p3"></div>
-			<div id="p4"></div>
-		</div>
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+	<body>
 
-		<div id="info">
-			<div id="score">
-				
+	<div id="screen-wrapper">
+	
+		<div id="header">
+
+			<div id="player">
+				<div class="player-color" id="player-1"></div>
 			</div>
 
-			<div class='radialtimer' id='timer'>
-				
-			</div>
-		</div>
-	</header>
+			<div id="infos">
+				<div id="score">
+					<span id="compteur">0</span> km
+				</div>
 
-	<div id='wrapper'>
-		<div id="menu">
-			<div id="back">
-				
-			</div>
-			<div id="erase">
-				
-			</div>
-			<div id="perso">
-				
+				<div id="time">
+					
+				</div>
 			</div>
 		</div>
-		<div id="game">
-			<div id="grid-container">
-				
+
+		<div id="content">
+			<div class="aside">
+				<ul id="menu">
+					<li>
+						<a href="#" id="back" title="retour"></a>
+					</li>
+					<li>
+						<a href="#" id="erase" title="annuler"></a>
+					</li>
+				</ul>
+				<div id="perso"></div>
 			</div>
 
-			<canvas id="my-canvas">
-				
-			</canvas>
+			<div id="game-container">
+				<canvas id="my-canvas">	</canvas>
+				<div id="grid-container"></div>
+			</div>
 		</div>
-	</div>
-
-	<script type="text/javascript" src="js/utils.js"></script>
-	<script type="text/javascript" src="js/image_manager.js"></script>
-	<script type="text/javascript" src="js/grid.js"></script>
-	<script type="text/javascript" src="js/path.js"></script>
-	<script type="text/javascript" src="js/movable.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="js/timer.js"></script>
-</body>
+		</div>
+		<script type="text/javascript" src="js/utils.js"></script>
+		<script type="text/javascript" src="js/image_manager.js"></script>
+		<script type="text/javascript" src="js/grid.js"></script>
+		<script type="text/javascript" src="js/path.js"></script>
+		<script type="text/javascript" src="js/movable.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+	</body>
 </html>
